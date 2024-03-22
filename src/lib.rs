@@ -23,7 +23,8 @@
 //     haystack.is_empty()
 // }
 
-// Using recursion
+// Using recursion (chatgpt)
+// works, yet too complex and hard to understand
 pub fn brackets_are_balanced(string: &str) -> bool {
     fn is_matching_pair(open: char, close: char) -> bool {
         (open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}')
