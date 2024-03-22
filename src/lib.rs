@@ -25,9 +25,7 @@
 
 // Using match --> I beleive this is the most elegant solution
 pub fn brackets_are_balanced(string: &str) -> bool {
-    match string {
-        "" => true,
-        _ => {
+
             let mut stack = Vec::new();
             for c in string.chars() {
                 match c {
@@ -43,8 +41,7 @@ pub fn brackets_are_balanced(string: &str) -> bool {
                 }
             }
             stack.is_empty()
-        }
-    }
+
 } 
 
 
