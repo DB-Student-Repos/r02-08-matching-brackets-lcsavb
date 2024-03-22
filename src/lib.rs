@@ -23,40 +23,29 @@
 //     haystack.is_empty()
 // }
 
-// Using recursion (chatgpt)
-// works, yet too complex and hard to understand
+// Using match --> I beleive this is the most elegant solution
 pub fn brackets_are_balanced(string: &str) -> bool {
-    fn is_matching_pair(open: char, close: char) -> bool {
-        (open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}')
-    }
+    match string {
+        "" => true,
+        _ => {
+            let mut stack = Vec::new();
+            for c in string.chars() {
+                match c {
+                    '(' | '[' | '{' => stack.push(c),
 
-    fn helper(stack: &mut Vec<char>, chars: &[char]) -> bool {
-        if chars.is_empty() {
-            return stack.is_empty();
-        }
-
-        let first = chars[0];
-        let rest = &chars[1..];
-
-        match first {
-            '[' | '{' | '(' => {
-                stack.push(first);
-                helper(stack, rest)
-            },
-            ']' | '}' | ')' => {
-                if stack.is_empty() || !is_matching_pair(stack.pop().unwrap(), first) {
-                    false
-                } else {
-                    helper(stack, rest)
+                    // using .unwrap() to get the value of stack.pop() and comparing
+                    // directly do a string can be dangerous
+                    // and can cause a panic if the value is None, so it is not recommended
+                    ')' => if stack.pop() != Some('(') { return false; },
+                    ']' => if stack.pop() != Some('[') { return false; },
+                    '}' => if stack.pop() != Some('{') { return false; },
+                    _ => (),
                 }
-            },
-            _ => helper(stack, rest),
+            }
+            stack.is_empty()
         }
     }
-
-    let chars: Vec<char> = string.chars().collect();
-    helper(&mut Vec::new(), &chars)
-}
+} 
 
 
 // Using Regex
